@@ -1,26 +1,13 @@
-import { useState, useEffect } from "react"
+import ExtensionHeader from "../components/header"
+import styles from "../styles/Extension.module.css"
 
 export default function Extension() {
-  // const [minHeight, setMinHeight] = useState<number | undefined>()
-  // const {
-  //   data: keyInsight,
-  //   isLoading,
-  //   mutateAsync,
-  // } = useMutation(findKeyInsight)
-
-  // async function summarizeArticle() {
-  //   // ..
-  // }
-
-  // useEffect(() => {
-  //   summarizeArticle()
-  // }, [])
 
   return (
-    <div>hellooooooooo</div>
-    // <Layout minHeight={minHeight}>
-    //   <Heading>What is the point?</Heading>
-    //   // ...
-    // </Layout>
+    <div className={styles.container}>
+      <div>hellooooooooo</div>
+      <div>hiiiii</div>
+      <ExtensionHeader />
+    </div>
   )
 }

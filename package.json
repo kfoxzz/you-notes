@@ -3,8 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build && next export && npm run prepare",
-    "prepare": "mv out/_next out/assets && sed -i 's/\\/_next/\\/assets/g' out/**.html"
+    "dev": "next dev",
+    "dev:extension": "npm-watch",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "build:extension": "next build && next export && npm run lint:build",
+    "lint:build": "mv out/_next out/assets && gsed -i 's/\\/_next/\\/assets/g' out/**.html",
+    "package": "npm run build:extension && zip -r packages/$(date -u +\"%Y-%m-%dT%H:%M:%SZ\").zip out"
   },
   "dependencies": {
     "@types/node": "20.4.10",
@@ -13,6 +19,7 @@
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.13",
     "next": "13.4.13",
+    "npm-watch": "^0.11.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "5.1.6"

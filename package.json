@@ -25,12 +25,13 @@
     "typescript": "5.1.6"
   },
   "watch": {
-    "build": {
+    "build:extension": {
       "patterns": [
         ".",
         "styles/**",
         "pages/**",
-        "public/**"
+        "public/**",
+        "components/**"
       ],
       "ignore": [
         "out",

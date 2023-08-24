@@ -43,7 +43,8 @@
         "json",
         "lock",
         "tsx",
-        "ts"
+        "ts",
+        "css"
       ]
     }
   }

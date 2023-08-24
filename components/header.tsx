@@ -1,9 +1,14 @@
+import styles from '../styles/Header.module.css'
+
 export default function ExtensionHeader() {
   return (
     <div>
-      <h1>What is the point?</h1>
+      <div className={styles.logo_text}>
+        <img src="/icons/notes-32.png" alt="YouNotes Logo" width={32} height={32} />
+        <h1>YouNotes</h1>
+      </div>
       <p>
-        The point is to summarize the article you&apos;re reading.
+        Save time for what matters.
       </p>
     </div>
   )

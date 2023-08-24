@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from '../styles/Header.module.css';
+import styles from '../styles/Header.module.scss';
 import { BsThreeDotsVertical as Dots } from 'react-icons/bs';
 import Icon from './icon';
 import Menu from './menu';

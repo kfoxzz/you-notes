@@ -45,7 +45,9 @@
         "lock",
         "tsx",
         "ts",
-        "css"
+        "css",
+        "scss",
+        "sass"
       ]
     }
   },

@@ -1,4 +1,19 @@
-.container {
+.app {
+  --primary-color: #f00000;
+  --background-color: white;
+  --hover-color: #f5f5f5;
+  --font-color: black;
+
   padding: 25px;
-  width: 300px;
+  width: 350px;
+  height: 550px;
+  font-size: 14px;
+  background-color: var(--background-color);
+  color: var(--font-color);
+}
+
+.dark {
+  --background-color: #343434;
+  --hover-color: #4a4a4a;
+  --font-color: white;
 }

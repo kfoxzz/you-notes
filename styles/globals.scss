@@ -4,25 +4,6 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
     Droid Sans, Helvetica Neue, sans-serif;
-
-  --primary-color: #f00000;
-  --secondary-color: #00f000;
-  --tertiary-color: #0000f0;
-  --quaternary-color: #f0f000;
-  --quinary-color: #f000f0;
-  --senary-color: #00f0f0;
-  --septenary-color: #f0f0f0;
-  --octonary-color: #000000;
-  --nonary-color: #ffffff;
-  --denary-color: #808080;
-  --eleventh-color: #800000;
-  --twelfth-color: #808000;
-
-  --background: var(--primary-color);
-
-  &.dark {
-    --background: var(--nonary-color);
-  }
 }
 
 a {

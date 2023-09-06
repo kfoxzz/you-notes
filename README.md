@@ -2,13 +2,13 @@
 
 ### IMPORTANT: Please use node v17.2.0.
 
-To run the local development server (not the extension) at :
+To run the local development server (not the extension):
 
 ```bash
 npm run dev
 ```
 
-To build the /out directory to work on the extension locally:
+To build the /out directory and run the extension locally:
 
 ```bash
 npm run dev:extension

@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import OpenaiAPI from '../api/openai';
+import styles from '../styles/Summary.module.scss';
+import Button from './ui/button';
+import LoadingSpinner from './ui/spinner';
 
 export default function Summary() {
   const [summary, setSummary] = useState<string>('');
@@ -24,20 +27,26 @@ export default function Summary() {
   };
 
   return (
-    <div>
-      {loadingSummary ? (
-        <p>Fetching summary...</p>
-      ) : summary.length > 0 ? (
-        <>
-          <p>Summary:</p>
-          <p>{summary}</p>
-        </>
-      ) : (
-        <></>
-      )}
-      <button onClick={fetchSummary} disabled={loadingSummary}>
+    <div className={styles.container}>
+      <div className={styles.content}>
+        {loadingSummary ? (
+          <>
+            <LoadingSpinner />
+            <p>Fetching summary...</p>
+          </>
+        ) : summary.length > 0 ? (
+          <>
+            <p>Summary:</p>
+            <p>{summary}</p>
+          </>
+        ) : (
+          <></>
+        )}
+      </div>
+
+      <Button onClick={fetchSummary} disabled={loadingSummary}>
         {buttonText}
-      </button>
+      </Button>
     </div>
   );
 }

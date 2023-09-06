@@ -1,19 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-
   async headers() {
     return [
       {
         // matching all API routes
         // TODO: Don't match all /api routes, only specific routes
-        source: '/api/:path*',
+        source: '/api/openai',
         headers: [
           { key: 'Access-Control-Allow-Credentials', value: 'true' },
           { key: 'Access-Control-Allow-Origin', value: '*' },
           {
             key: 'Access-Control-Allow-Methods',
-            value: 'OPTIONS,POST',
+            value: 'POST',
           },
           {
             key: 'Access-Control-Allow-Headers',
@@ -23,6 +22,10 @@ const nextConfig = {
         ],
       },
     ];
+  },
+  env: {
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+    BASE_API_URL: process.env.BASE_API_URL,
   },
 };
 

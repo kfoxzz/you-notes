@@ -13,6 +13,7 @@
     "package": "npm run build:extension && zip -r packages/$(date -u +\"%Y-%m-%dT%H:%M:%SZ\").zip out"
   },
   "dependencies": {
+    "@types/chrome": "^0.0.245",
     "@types/node": "20.4.10",
     "@types/react": "18.2.20",
     "@types/react-dom": "18.2.7",

@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { TabContext } from '../context/tab';
 import OpenaiAPI from '../api/openai';
 import styles from '../styles/Summary.module.scss';
 import Button from './ui/button';
 import LoadingSpinner from './ui/spinner';
 
 export default function Summary() {
+  const { tabUrl } = useContext(TabContext);
+
   const [summary, setSummary] = useState<string>('');
   const [loadingSummary, setLoadingSummary] = useState<boolean>(false);
   const [buttonText, setButtonText] = useState<string>('Summarize');

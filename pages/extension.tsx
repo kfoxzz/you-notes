@@ -7,7 +7,7 @@ import Summary from '../components/summary';
 import styles from '../styles/Extension.module.scss';
 
 export default function Extension() {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
   const [tabUrl, setTabUrl] = useState<string>('');
 
   const themeValue = useMemo(

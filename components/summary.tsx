@@ -63,9 +63,7 @@ export default function Summary() {
               <p>{summary}</p>
             </>
           ) : (
-            <>
-              <p>Hit Summarize to work the magic!</p>
-            </>
+            <p className={styles.prompt}>Hit Summarize to work the magic!</p>
           )}
         </div>
       )}

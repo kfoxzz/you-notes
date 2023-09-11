@@ -4,8 +4,6 @@ const nextConfig = {
   async headers() {
     return [
       {
-        // matching all API routes
-        // TODO: Don't match all /api routes, only specific routes
         source: '/api/openai',
         headers: [
           { key: 'Access-Control-Allow-Credentials', value: 'true' },

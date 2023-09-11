@@ -68,7 +68,7 @@ export default function Summary() {
         </div>
       )}
 
-      <Button onClick={fetchSummary} disabled={loadingSummary}>
+      <Button onClick={fetchSummary} disabled={loadingSummary || !isOnYoutube}>
         {buttonText}
       </Button>
     </div>

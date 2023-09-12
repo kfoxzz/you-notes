@@ -6,6 +6,6 @@ export default class ScraperAPI {
         url,
       }),
     });
-    // return response.json();
+    return response.json();
   };
 }

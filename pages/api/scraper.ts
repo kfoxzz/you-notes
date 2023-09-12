@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import axios from 'axios';
 import { JSDOM } from 'jsdom';
 
 type ResponseData = {
@@ -16,14 +15,58 @@ export const config = {
   },
 };
 
+// Copied much of this logic from https://github.com/kazuki-sf/YouTube_Summary_with_ChatGPT
 const scrape = async (url: string) => {
-  const { data } = await axios.get(url, {
-    method: 'GET',
-  });
-  const dom = new JSDOM(data);
-  const transcriptContainer = dom.window.document.querySelectorAll('ytd-transcript-segment-list-renderer');
-  // NOTE: LEFT OFF HERE
-  // console.log('transcriptContainer', transcriptContainer);
+  try {
+    const videoPageResponse = await fetch(url);
+    const videoPageHtml = await videoPageResponse.text();
+    const splittedHtml = videoPageHtml.split('"captions":');
+
+    if (splittedHtml.length < 2) {
+      console.log('No Caption Available');
+      return;
+    } // No Caption Available
+
+    const captions_json = JSON.parse(splittedHtml[1].split(',"videoDetails')[0].replace('\n', ''));
+    const captionTracks = captions_json.playerCaptionsTracklistRenderer.captionTracks;
+    const languageOptions = Array.from(captionTracks).map((i: any) => {
+      return i.name.simpleText;
+    });
+
+    const first = 'English'; // Sort by English first
+    languageOptions.sort(function (x, y) {
+      return x.includes(first) ? -1 : y.includes(first) ? 1 : 0;
+    });
+    languageOptions.sort(function (x, y) {
+      return x == first ? -1 : y == first ? 1 : 0;
+    });
+
+    const langOptionArray = Array.from(languageOptions).map((langName, index) => {
+      const link = captionTracks.find((i: any) => i.name.simpleText === langName).baseUrl;
+      return {
+        language: langName,
+        link: link,
+      };
+    });
+
+    const english = langOptionArray[0].link;
+
+    console.log('LANG LINK =>', english);
+
+    const rawTranscript = await fetch(english);
+    const transcriptPageXml = await rawTranscript.text();
+
+    const domParser = new JSDOM().window.DOMParser;
+    const xmlDoc = new domParser().parseFromString(transcriptPageXml, 'text/xml');
+    const textNodes = xmlDoc.childNodes;
+
+    const finalRawTranscript = Array.from(textNodes).map(i => i.textContent);
+
+    console.log('transcript => ', finalRawTranscript);
+  } catch (err) {
+    console.log('ERROR => ', err);
+    return;
+  }
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {

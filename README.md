@@ -2,16 +2,18 @@
 
 ### IMPORTANT: Please use node v17.2.0.
 
-To run the local development server (not the extension):
+
+To run the local development server (not including the extension):
 
 ```bash
 npm run dev
 ```
 
-To build the /out directory and run the extension locally:
+
+To run the extension locally:
 
 ```bash
-npm run dev:extension
+npm run build:extension
 ```
 
 Navigate to chrome://extensions/ and click "Load unpacked" and select the /out directory.

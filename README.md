@@ -1,4 +1,6 @@
-## Development
+## YouNotes
+YouNotes is a Chrome extension that utilizes the power of OpenAI Chat-GPT to summarize YouTube videos.
+Chrome extension store approval pending.
 
 ### IMPORTANT: Please use node v17.2.0.
 

@@ -15,7 +15,7 @@
   height: 100%;
 
   p {
-    overflow: scroll;
+    overflow-y: auto;
     margin: 50px 0px 25px;
   }
 }

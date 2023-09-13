@@ -3,6 +3,7 @@ import { JSDOM } from 'jsdom';
 
 type ResponseData = {
   message: string;
+  text?: string;
 };
 
 // Every API Route can export a config object to change the default configuration, which is the following
@@ -17,6 +18,11 @@ export const config = {
 
 // Copied much of this logic from https://github.com/kazuki-sf/YouTube_Summary_with_ChatGPT
 const scrape = async (url: string) => {
+  // TODO:
+  // [ ] clean up logic, remove unnecessary code
+  // [ ] error handling needs to be revamped
+  // [ ] api tests
+
   try {
     const videoPageResponse = await fetch(url);
     const videoPageHtml = await videoPageResponse.text();
@@ -24,8 +30,9 @@ const scrape = async (url: string) => {
 
     if (splittedHtml.length < 2) {
       console.log('No Caption Available');
+      // TODO: How to return this and handle it in the frontend?
       return;
-    } // No Caption Available
+    }
 
     const captions_json = JSON.parse(splittedHtml[1].split(',"videoDetails')[0].replace('\n', ''));
     const captionTracks = captions_json.playerCaptionsTracklistRenderer.captionTracks;
@@ -51,8 +58,6 @@ const scrape = async (url: string) => {
 
     const english = langOptionArray[0].link;
 
-    console.log('LANG LINK =>', english);
-
     const rawTranscript = await fetch(english);
     const transcriptPageXml = await rawTranscript.text();
 
@@ -62,9 +67,9 @@ const scrape = async (url: string) => {
 
     const finalRawTranscript = Array.from(textNodes).map(i => i.textContent);
 
-    console.log('transcript => ', finalRawTranscript);
+    return finalRawTranscript[0];
   } catch (err) {
-    console.log('ERROR => ', err);
+    console.log('UNHANDLED ERROR /api/openai fn scrape => ', err);
     return;
   }
 };
@@ -78,9 +83,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         res.status(400).json({ message: 'Url is required and must be a valid string' });
       }
 
-      await scrape(url);
+      const summary = await scrape(url);
 
-      res.status(200).json({ message: 'Success' });
+      if (!summary || typeof summary !== 'string') {
+        res.status(400).json({ message: "Summary failed or didn't produce a string" });
+        return;
+      }
+
+      res.status(200).json({ message: 'Success', text: summary });
     } catch (err) {
       res.status(400).json({ message: 'Unknown error' });
     }

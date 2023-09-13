@@ -14,21 +14,17 @@ export default function Summary() {
   const [isOnYoutube, setIsOnYoutube] = useState<boolean>(false);
   const [summary, setSummary] = useState<string>('');
   const [loadingSummary, setLoadingSummary] = useState<boolean>(false);
-  const [buttonText, setButtonText] = useState<string>('Summarize');
+  const [summaryCompleted, setSummaryCompleted] = useState<boolean>(false);
 
   const fetchSummary = async () => {
     setLoadingSummary(true);
-    // this will likely take awhile - should warn the user
+    setSummaryCompleted(false);
     try {
-      // TODO: Use selenium to parse transcript and concatenate into 1 string
       const transcript = await ScraperAPI.scrapeTranscript(tabUrl);
-
-      // const response = await OpenaiAPI.summarize(
-      //   'I like birds, and all animals. There are many species of birds, hundreds even. They live all over the world in every continent.'
-      // );
-      // const response = await OpenaiAPI.summarize(transcript);
-      // setSummary(response.message);
-      setButtonText('Try again');
+      const response = await OpenaiAPI.summarize(transcript);
+      setSummary(response.message);
+      // TODO: Maybe we should save summary to local storage? I accidentally clicked out of the summary and lost it several times, and it takes awhile to summarize.
+      setSummaryCompleted(true);
     } catch (err) {
       console.error(err);
       setSummary('Uh oh! Something went wrong.');
@@ -38,6 +34,8 @@ export default function Summary() {
   };
 
   useEffect(() => {
+    setSummaryCompleted(false);
+
     if (tabUrl.includes(youtubeUrl)) {
       setIsOnYoutube(true);
     } else {
@@ -55,6 +53,7 @@ export default function Summary() {
             <>
               <LoadingSpinner />
               <p>Fetching summary...</p>
+              {/* add snippet here in small font - "Please allow 1-2 minutes for the AI to finish working." or something similar */}
             </>
           ) : summary.length > 0 ? (
             <>
@@ -67,8 +66,8 @@ export default function Summary() {
         </div>
       )}
 
-      <Button onClick={fetchSummary} disabled={loadingSummary || !isOnYoutube}>
-        {buttonText}
+      <Button onClick={fetchSummary} disabled={loadingSummary || !isOnYoutube || summaryCompleted}>
+        Summarize!
       </Button>
     </div>
   );

@@ -29,6 +29,8 @@ const scrape = async (url: string) => {
     const splittedHtml = videoPageHtml.split('"captions":');
 
     if (splittedHtml.length < 2) {
+      // NOTE: LEFT OFF HERE
+      // we need to return a message to the user that says there are no captions available. Need to create an error handlng system
       console.log('No Caption Available');
       // TODO: How to return this and handle it in the frontend?
       return;

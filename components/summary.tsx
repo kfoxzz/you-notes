@@ -27,6 +27,7 @@ export default function Summary() {
       setSummaryCompleted(true);
     } catch (err) {
       console.error(err);
+      // TODO: We should be setting an error, not setting the summary to an error message.
       setSummary('Uh oh! Something went wrong.');
     } finally {
       setLoadingSummary(false);

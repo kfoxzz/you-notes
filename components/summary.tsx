@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { TabContext } from '../context/tab';
-import OpenaiAPI from '../api/openai';
-import ScraperAPI from '../api/scraper';
+import OpenaiAPI from '../api/openaiapi';
+import ScraperAPI from '../api/scraperapi';
 import styles from '../styles/Summary.module.scss';
 import Button from './ui/button';
 import LoadingSpinner from './ui/spinner';

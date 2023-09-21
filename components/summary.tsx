@@ -6,6 +6,7 @@ import styles from '../styles/Summary.module.scss';
 import Button from './ui/button';
 import LoadingSpinner from './ui/spinner';
 import NavigateMessage from './navigate-message';
+import { MdErrorOutline as ErrorIcon } from 'react-icons/md';
 
 export default function Summary() {
   const { tabUrl } = useContext(TabContext);
@@ -15,20 +16,30 @@ export default function Summary() {
   const [summary, setSummary] = useState<string>('');
   const [loadingSummary, setLoadingSummary] = useState<boolean>(false);
   const [summaryCompleted, setSummaryCompleted] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
 
   const fetchSummary = async () => {
+    setError(false);
     setLoadingSummary(true);
     setSummaryCompleted(false);
     try {
       const transcript = await ScraperAPI.scrapeTranscript(tabUrl);
       const response = await OpenaiAPI.summarize(transcript);
       setSummary(response.message);
-      // TODO: Maybe we should save summary to local storage? I accidentally clicked out of the summary and lost it several times, and it takes awhile to summarize.
+      // TODO: Add a database layer to save summary. It's really annoying that it gets cleared and request is canceled if user clicks out of extension. This should be a background process that saves the summary to the database after it is done.
+
+      // Steps:
+      // 1. Summary is requested.
+      // 2. Summary is created in database, with status of 'processing' and a request date.
+      // 3. Web socket connection waits for summary to be completed.
+      // 4. When summary is completed, it is sent to frontend via web socket (if connection is still open), saved to the database object, and status in database is set to 'complete'.
+      //    - This is so that if the user closes the extension, the request doesn't get canceled and the user can view the summary at a later time.
+      // 5. All requested summaries (processing and complete) are displayed in the frontend.
+
       setSummaryCompleted(true);
     } catch (err) {
+      setError(true);
       console.error(err);
-      // TODO: We should be setting an error, not setting the summary to an error message.
-      setSummary('Uh oh! Something went wrong.');
     } finally {
       setLoadingSummary(false);
     }
@@ -60,6 +71,12 @@ export default function Summary() {
             <>
               <p>Summary:</p>
               <p>{summary}</p>
+            </>
+          ) : error ? (
+            <>
+              <ErrorIcon size={52} />
+              <p>Error</p>
+              <p> Something went wrong. Please try again.</p>
             </>
           ) : (
             <>

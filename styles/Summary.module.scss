@@ -16,7 +16,14 @@
 
   p {
     overflow-y: auto;
-    margin: 50px 0px 25px;
+
+    &:last-of-type {
+      max-height: 325px;
+      color: gray;
+      font-style: italic;
+      text-align: center;
+      margin-top: 0;
+    }
   }
 }
 

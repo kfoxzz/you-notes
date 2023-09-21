@@ -54,7 +54,7 @@ export default function Summary() {
             <>
               <LoadingSpinner />
               <p>Fetching summary...</p>
-              {/* add snippet here in small font - "Please allow 1-2 minutes for the AI to finish working." or something similar */}
+              <p>Please allow 30 seconds for summary to be created.</p>
             </>
           ) : summary.length > 0 ? (
             <>
@@ -62,7 +62,12 @@ export default function Summary() {
               <p>{summary}</p>
             </>
           ) : (
-            <p className={styles.prompt}>Hit Summarize to work the magic!</p>
+            <>
+              <p className={styles.prompt}>Hit Summarize to work the magic!</p>
+              <p className={styles.prompt}>
+                Note: Due to increased demand, video must less than 30 minutes long.
+              </p>
+            </>
           )}
         </div>
       )}

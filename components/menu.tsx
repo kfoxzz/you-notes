@@ -19,6 +19,18 @@ export default function Menu({ open }: { open: boolean }) {
           {theme === 'light' ? <MoonIcon size={22} /> : <SunIcon size={22} />}
           {theme === 'light' ? 'Dark' : 'Light'} mode
         </li>
+
+        <li>
+          <span>
+            <a href='https://iconscout.com/icons/notes' target='_blank'>
+              Free Notes Icon
+            </a>{' '}
+            by{' '}
+            <a href='https://iconscout.com/contributors/scott-de-jonge' target='_blank'>
+              Scott De jonge
+            </a>
+          </span>
+        </li>
       </ul>
     </div>
   );
